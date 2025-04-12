@@ -7,6 +7,6 @@ license = "Apache-2.0 OR MIT"
 compiler = "0.13.1"
 repository = "https://github.com/physgun/mash"
 description = "Vividly illustrate layouts for keyboards and other input devices, with CeTZ."
-exclude = [".gitignore"]
+exclude = [".gitignore", "test/"]
 categories = ["visualization"]
 keywords = ["keyboard", "layout"]
