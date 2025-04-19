@@ -1,4 +1,4 @@
-#import "../src/lib.typ": mash
+#import "../src/lib.typ": mash, mash-render
 #import "../src/deps.typ": cetz
 
 #set page(width: 14cm, height: auto, margin: 0.5em)
@@ -9,9 +9,9 @@
   //debug: true
   {
     import cetz.draw: *
-    import "../src/catalog/common.typ": unit-rect
-    circle((5, 2), radius: 1)
-    unit-rect(origin: (1, 1), target: (3, 2), name: "test-box").unnamed.cetz
+    import "../src/catalog/common.typ": unit-rect, physical-palette, one-by-three, inverted-t, cross, two-by-three, three-by-three, one-by-four
+    circle((5, 12), radius: 1)
+    mash-render(finished-dict: one-by-four(origin: (1, 3), size: (1, 1)))
 
   }
 )

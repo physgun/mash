@@ -1,1 +1,1 @@
-#import "mash.typ": mash
+#import "mash.typ": mash, mash-render
