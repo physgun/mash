@@ -32,15 +32,15 @@
       final-cetz.push(scoped-section)
       scoped-section = ()
     }
-
-    // here u go
-    final-cetz.flatten()
-
   }
+
+  // here u go
+  final-cetz.flatten()
 }
 
-/// The quick and easy way!x
+/// The quick and easy way!
 #let mash(
+  body,
   auto-scale-all: (
     diagram: true,
     content: false,
@@ -53,7 +53,7 @@
     length: 1cm,
     padding: none
   ),
-  extra-cetz
+  extra-cetz: none
   ) = {
 
   layout(parent-container-size => {
@@ -72,13 +72,30 @@
         import cetz.draw: *
 
         scope({
-          if auto-scale-all.content { set-style(content: (style: (auto-scale: true))) } // TODO: fix
-          scale( if auto-scale-all.diagram { scale-factor } else { 1.0 } )
 
-          rect((0, 0), (1, 1), name: "fill-box")
-          content("fill-box", [#scale-factor, #{float.inf > 100}])
+          get-ctx(ctx => { 
+            import cetz.process: aabb.size, many
+            let raw-size = size( many(ctx, body).bounds ) 
+            let normalized-dimension = calc.max(raw-size.at(0), raw-size.at(1))
+
+            if auto-scale-all.content { set-style(content: (style: (auto-scale: true))) } // TODO: fix
+            scale( if auto-scale-all.diagram { scale-factor } else { 1.0 } )
+
+            rect((0, 0), (1, 1), name: "fill-box")
+            content(style: (fill: white), (rel: (0, -0.1), to: "fill-box.north"), [#scale-factor])
+            content("fill-box", [#raw-size])
+
+            scope({
+              set-viewport((0, 0), (canvas.length, canvas.length), bounds: (normalized-dimension, normalized-dimension))
+              body
+            })
+
+            
+          })
+
 
           if auto-scale-all.extra-cetz { extra-cetz }
+          
         })
 
         if not auto-scale-all.extra-cetz { extra-cetz }

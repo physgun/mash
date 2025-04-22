@@ -5,15 +5,16 @@
 
 #lorem(100)
 
-#mash(
-  //debug: true
-  {
-    import cetz.draw: *
-    import "../src/catalog/common.typ": unit-rect, physical-palette, one-by-three, inverted-t, cross, two-by-three, three-by-three, one-by-four
-    circle((5, 12), radius: 1)
-    mash-render(finished-dict: one-by-four(origin: (1, 3), size: (1, 1)))
-
-  }
+#align(center + horizon, 
+  box(
+    height: 5cm,
+    width: 10cm,
+    fill: blue.lighten(80%),
+    mash({
+      import "../src/catalog/structure/components.typ": numpad, nav-keys, func-row, sixty-percent-row-a
+      mash-render(finished-dict: sixty-percent-row-a(standard: "ANSI", origin: (0, 0), unit-size: (1, 1)))
+    })
+  )
 )
 
 #lorem(100)

@@ -1,7 +1,7 @@
-#import "../deps.typ": cetz
+#import "../../deps.typ": cetz
+#import "../display/flat.typ": debug-gray
 
-/// Draw style for the physical base shapes.
-#let physical-palette = (stroke: (paint: black, thickness: 1pt, dash: "dotted"))
+#let structure-style = debug-gray
 
 /// Prefab for a rectangular section.
 #let unit-rect(
@@ -9,16 +9,17 @@
   size: (1, 1),
   name: "unnamed",
   tags: (),
-  default-style: physical-palette
+  default-style: structure-style
 ) = {
+  tags.push("rectangle")
   (
     named: name,
-    tags: tags.push("rectangle"),
-    style-physical: {
+    tags: tags,
+    style-structure: {
       import cetz.draw: set-style
       set-style(..default-style)
     },
-    cetz-physical: {
+    cetz-structure: {
       import cetz.draw: rect, line
 
       // Primary unit boundaries.
@@ -63,16 +64,16 @@
 /// ```
 #let inverted-t(
   origin: (0, 0), 
-  size: (1, 1),
+  unit-size: (1, 1),
   common-tags: (),
   names: ("left", "down", "right", "up"),
-  default-style: physical-palette
+  default-style: structure-style
 ) = {
   (
     (
       unit-rect(
         origin: origin, 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(0),
         tags: common-tags,
         default-style: default-style
@@ -81,7 +82,7 @@
     (
       unit-rect(
         origin: names.at(0) + ".south-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(1),
         tags: common-tags,
         default-style: default-style
@@ -90,7 +91,7 @@
     (
       unit-rect(
         origin: names.at(1) + ".south-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(2),
         tags: common-tags,
         default-style: default-style
@@ -99,7 +100,7 @@
     (
       unit-rect(
         origin: names.at(1) + ".north-west", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(3),
         tags: common-tags,
         default-style: default-style
@@ -123,18 +124,18 @@
 /// ```
 #let cross(
   origin: (0, 0), 
-  size: (1, 1),
+  unit-size: (1, 1),
   common-tags: (),
   names: ("left", "down", "right", "up"),
-  default-style: physical-palette
+  default-style: structure-style
 ) = {
-  let (size-x, size-y) = size
+  let (unit-size-x, unit-size-y) = unit-size
 
   (
     (
       unit-rect(
         origin: origin, 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(0),
         tags: common-tags,
         default-style: default-style
@@ -143,7 +144,7 @@
     (
       unit-rect(
         origin: names.at(0) + ".south-east", 
-        size: (rel: (size-x, -size-y)), 
+        size: (rel: (unit-size-x, -unit-size-y)), 
         name: names.at(1),
         tags: common-tags,
         default-style: default-style
@@ -152,7 +153,7 @@
     (
       unit-rect(
         origin: names.at(1) + ".north-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(2),
         tags: common-tags,
         default-style: default-style
@@ -161,7 +162,7 @@
     (
       unit-rect(
         origin: names.at(0) + ".north-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(3),
         tags: common-tags,
         default-style: default-style
@@ -179,16 +180,16 @@
 /// ```
 #let one-by-three(
   origin: (0, 0), 
-  size: (1, 1),
+  unit-size: (1, 1),
   common-tags: (),
   names: ("unnamed1", "unnamed2", "unnamed3"),
-  default-style: physical-palette
+  default-style: structure-style
 ) = {
   (
     (
       unit-rect(
         origin: origin, 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(0),
         tags: common-tags,
         default-style: default-style
@@ -197,7 +198,7 @@
     (
       unit-rect(
         origin: names.at(0) + ".south-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(1),
         tags: common-tags,
         default-style: default-style
@@ -206,13 +207,13 @@
     (
       unit-rect(
         origin: names.at(1) + ".south-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(2),
         tags: common-tags,
         default-style: default-style
       )
     ),
-  )
+  ).flatten()
 }
 
 /// Two rows of three buttons:
@@ -221,24 +222,21 @@
 /// |__|__|__|
 /// |__|__|__|
 /// 
-///  1--2--3
 ///  4--5--6
+///  1--2--3
 /// ```
 #let two-by-three(
   origin: (0, 0), 
-  size: (1, 1),
+  unit-size: (1, 1),
   common-tags: (),
   names: ("unnamed1", "unnamed2", "unnamed3", "unnamed4", "unnamed5", "unnamed6"),
-  default-style: physical-palette
+  default-style: structure-style
 ) = {
-
-  let (size-x, size-y) = size
-
   (
     (
       one-by-three(
         origin: origin, 
-        size: size, 
+        unit-size: unit-size, 
         names: names.slice(0, count: 3),
         common-tags: common-tags,
         default-style: default-style
@@ -246,8 +244,8 @@
     ),
     (
       one-by-three(
-        origin: (rel: (0, -size-y), to: names.at(0) + ".south-west"), 
-        size: size, 
+        origin: (rel: (0, 0), to: names.at(0) + ".north-west"), 
+        unit-size: unit-size, 
         names: names.slice(3, count: 3),
         common-tags: common-tags,
         default-style: default-style
@@ -262,26 +260,23 @@
 /// |__|__|__|
 /// |__|__|__|
 /// |__|__|__|
-/// 
-///  1--2--3
-///  4--5--6
+///
 ///  7--8--9
+///  4--5--6
+///  1--2--3
 /// ```
 #let three-by-three(
   origin: (0, 0), 
-  size: (1, 1),
+  unit-size: (1, 1),
   common-tags: (),
   names: ("unnamed1", "unnamed2", "unnamed3", "unnamed4", "unnamed5", "unnamed6", "unnamed7", "unnamed8", "unnamed9"),
-  default-style: physical-palette
+  default-style: structure-style
 ) = {
-
-  let (size-x, size-y) = size
-
   (
     (
       one-by-three(
         origin: origin, 
-        size: size, 
+        unit-size: unit-size, 
         names: names.slice(0, count: 3),
         common-tags: common-tags,
         default-style: default-style
@@ -289,8 +284,8 @@
     ),
     (
       one-by-three(
-        origin: (rel: (0, -size-y), to: names.at(0) + ".south-west"), 
-        size: size, 
+        origin: (rel: (0, 0), to: names.at(0) + ".north-west"), 
+        unit-size: unit-size, 
         names: names.slice(3, count: 3),
         common-tags: common-tags,
         default-style: default-style
@@ -298,8 +293,8 @@
     ),
     (
       one-by-three(
-        origin: (rel: (0, -size-y), to: names.at(3) + ".south-west"), 
-        size: size, 
+        origin: (rel: (0, 0), to: names.at(3) + ".north-west"), 
+        unit-size: unit-size, 
         names: names.slice(6, count: 3),
         common-tags: common-tags,
         default-style: default-style
@@ -317,16 +312,16 @@
 /// ```
 #let one-by-four(
   origin: (0, 0), 
-  size: (1, 1),
+  unit-size: (1, 1),
   common-tags: (),
   names: ("unnamed1", "unnamed2", "unnamed3", "unnamed4"),
-  default-style: physical-palette
+  default-style: structure-style
 ) = {
   (
     (
       unit-rect(
         origin: origin, 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(0),
         tags: common-tags,
         default-style: default-style
@@ -335,7 +330,7 @@
     (
       unit-rect(
         origin: names.at(0) + ".south-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(1),
         tags: common-tags,
         default-style: default-style
@@ -344,7 +339,7 @@
     (
       unit-rect(
         origin: names.at(1) + ".south-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(2),
         tags: common-tags,
         default-style: default-style
@@ -353,7 +348,7 @@
     (
       unit-rect(
         origin: names.at(2) + ".south-east", 
-        size: (rel: size), 
+        size: (rel: unit-size), 
         name: names.at(3),
         tags: common-tags,
         default-style: default-style
