@@ -11,8 +11,8 @@
     width: 10cm,
     fill: blue.lighten(80%),
     mash({
-      import "../src/catalog/structure/components.typ": numpad, nav-keys, func-row, sixty-percent-row-a
-      mash-render(finished-dict: sixty-percent-row-a(standard: "ANSI", origin: (0, 0), unit-size: (1, 1)))
+      import "../src/catalog/structure/standard.typ": sixty-percent
+      mash-render(finished-dict: sixty-percent(standard: "ANSI-ALT", origin: (0, 0), unit-size: (1, 1)))
     })
   )
 )

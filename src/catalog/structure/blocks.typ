@@ -35,17 +35,17 @@
         let (width, height) = ((calc.abs(x1 - x0)), calc.abs(y1 - y0))
 
         if width >= height {
-          line((rel: (-height / 2, 0), to: name + ".east"), name + ".north-east", name: name + "-skel-north-east")
-          line((rel: (-height / 2, 0), to: name + ".east"), name + ".south-east", name: name + "-skel-south-east")
-          line((rel: (height / 2, 0), to: name + ".west"), name + ".south-west", name: name + "-skel-south-west")
-          line((rel: (height / 2, 0), to: name + ".west"), name + ".north-west", name: name + "-skel-north-west")
-          if width != height { line(name + "-skel-north-west.start", name + "-skel-north-east.start", name: name + "-skel") }
+          line((rel: (-height / 2, 0), to: name + ".east"), name + ".north-east", name: name + "-skele-1")
+          line((rel: (-height / 2, 0), to: name + ".east"), name + ".south-east", name: name + "-skele-2")
+          line((rel: (height / 2, 0), to: name + ".west"), name + ".south-west", name: name + "-skele-3")
+          line((rel: (height / 2, 0), to: name + ".west"), name + ".north-west", name: name + "-skele-4")
+          if width != height { line(name + "-skele-4.start", name + "-skele-1.start", name: name + "-skelcore") }
         } else {
-          line((rel: (0, -width / 2), to: name + ".north"), name + ".north-east", name: name + "-skel-north-east")
-          line((rel: (0, -width / 2), to: name + ".north"), name + ".north-west", name: name + "-skel-north-west")
-          line((rel: (0, width / 2), to: name + ".south"), name + ".south-east", name: name + "-skel-south-east")
-          line((rel: (0, width / 2), to: name + ".south"), name + ".south-west", name: name + "-skel-south-west")
-          line(name + "-skel-north-west.start", name + "-skel-south-east.start", name: name + "-skel") 
+          line((rel: (0, -width / 2), to: name + ".north"), name + ".north-east", name: name + "-skele-1")
+          line((rel: (0, -width / 2), to: name + ".north"), name + ".north-west", name: name + "-skele-2")
+          line((rel: (0, width / 2), to: name + ".south"), name + ".south-east", name: name + "-skele-3")
+          line((rel: (0, width / 2), to: name + ".south"), name + ".south-west", name: name + "-skele-4")
+          line(name + "-skele-2.start", name + "-skele-3.start", name: name + "-skelcore") 
         }
       })
     }
