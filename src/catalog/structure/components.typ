@@ -191,7 +191,7 @@
     (
       unit-rect(
         origin: origin, 
-        size: unit-size, 
+        size: (rel: unit-size, to: origin), 
         name: names.at(0),
         tags: esc-tags,
         default-style: default-style

@@ -288,3 +288,102 @@
 
   return sixty-board.flatten()
 }
+
+/// 80% of a standard keyboard, everything but the numpad.
+#let eighty-percent(
+  /// Available standards are ANSI, ANSI-ALT, ISO, JIS, KS, and ABNT.
+  standard: "ANSI",
+  origin: (0, 0), 
+  unit-size: (1, 1),
+  /// Horizontal and vertical spacing between the major button groups.
+  spacing: (x: 0.25, y: 0.25),
+  common-tags: (),
+  default-style: structure-style
+) = {
+  let (unit-size-x, unit-size-y) = unit-size
+
+  common-tags.push("eighty-percent")
+
+  let eighty-board = (
+    (
+      sixty-percent(
+        standard: standard,
+        origin: origin,
+        unit-size: unit-size,
+        common-tags: common-tags,
+        default-style: default-style
+      )
+    ),
+    (
+      func-row(
+        origin: (rel: (0, spacing.y), to: "key-e1.north-west"),
+        unit-size: unit-size,
+        common-tags: common-tags,
+        default-style: default-style
+      )
+    ),
+    (
+      sys-keys(
+        origin: (rel: (spacing.x, 0), to: "f12.south-east"),
+        unit-size: unit-size,
+        common-tags: common-tags,
+        default-style: default-style
+      )
+    ),
+    (
+      nav-keys(
+        origin: (rel: (0, -spacing.y - (2 * unit-size-y)), to: "sys-print-screen.south-west"),
+        unit-size: unit-size,
+        common-tags: common-tags,
+        default-style: default-style
+      )
+    ),
+    (
+      arrow-keys(
+        origin: (rel: (0, -3 * unit-size-y), to: "nav-delete.south-west"),
+        unit-size: unit-size,
+        common-tags: common-tags,
+        default-style: default-style
+      )
+    )
+  )
+
+  return eighty-board.flatten()
+}
+
+/// The entire 100% standard keyboard.
+#let hundred-percent(
+  /// Available standards are ANSI, ANSI-ALT, ISO, JIS, KS, and ABNT.
+  standard: "ANSI",
+  origin: (0, 0), 
+  unit-size: (1, 1),
+  /// Horizontal and vertical spacing between the major button groups.
+  spacing: (x: 0.25, y: 0.25),
+  common-tags: (),
+  default-style: structure-style
+) = {
+  common-tags.push("hundred-percent")
+
+  let hundred-board = (
+    (
+      eighty-percent(
+        standard: standard,
+        origin: origin,
+        unit-size: unit-size,
+        spacing: spacing,
+        common-tags: common-tags,
+        default-style: default-style
+      )
+    ),
+    (
+      numpad(
+        origin: (rel: (spacing.x, 0), to: "right-arrow.south-east"),
+        unit-size: unit-size,
+        common-tags: common-tags,
+        default-style: default-style
+      )
+    )
+  )
+
+  return hundred-board.flatten()
+}
