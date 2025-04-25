@@ -186,7 +186,101 @@
       )
     )
   } else if standard == "ANSI-ALT" or standard == "KS" {
+
     // Mostly found in Asia. Known in the West as "big-ass enter".
+    // Same as ISO, just flipped.
+    sixty-board.push(
+      (
+        named: return-name,
+        tags: ("button", "edit", "sixty-percent", "polygon"),
+        style-structure: {
+          import cetz.draw: set-style
+          set-style(..structure-style)
+        },
+        cetz-structure: {
+          import cetz.draw: rect, line
+
+          // Primary unit boundaries.
+          line(
+            "key-b12.north-east", "key-c12.south-east", "key-c12.north-east", 
+            "key-d13.south-east", "key-d13.north-east", "key-e15.south-east",
+            close: true,
+            name: return-name
+          )
+
+          let south-face-length = unit-size-x * 2.25
+          let west-end-length = unit-size-y
+          let north-end-length = unit-size-x * 1.5
+          let east-face-length = unit-size-y * 2
+
+          let begin-point = ()
+          let inner-corner-point = ()
+          let remaining-point = ()
+          let end-point = ()
+
+          if west-end-length <= north-end-length {
+            begin-point = (rel: (west-end-length / 2, west-end-length / 2), to: "key-c12.south-east")
+            inner-corner-point = (rel: (west-end-length / 2, -west-end-length / 2), to: "key-d13.south-east")
+
+            if east-face-length <= north-end-length {
+              end-point = (rel: (-east-face-length / 2, east-face-length / 2), to: "key-b12.north-east")
+              remaining-point = (rel: (east-face-length / 2, -east-face-length / 2), to: "key-d13.north-east")
+
+              line(begin-point, inner-corner-point, remaining-point, end-point, name: return-name + "-skelecore")
+
+              line(begin-point, "key-c12.south-east", name: return-name + "-skele-1")
+              line(begin-point, "key-c12.north-east", name: return-name + "-skele-2")
+              line(inner-corner-point, "key-d13.south-east", name: return-name + "-skele-3")
+              line(remaining-point, "key-d13.north-east", name: return-name + "-skele-4")
+              line(end-point, "key-e15.south-east", name: return-name + "-skele-5")
+              line(end-point, "key-b12.north-east", name: return-name + "-skele-6")
+              
+            } else {
+              end-point = (rel: (north-end-length / 2, -north-end-length / 2), to: "key-d13.north-east")
+              remaining-point = (rel: (-north-end-length / 2, north-end-length / 2), to: "key-b12.north-east")
+
+              line(begin-point, inner-corner-point, remaining-point, end-point, name: return-name + "-skelecore")
+
+              line(begin-point, "key-c12.south-east", name: return-name + "-skele-1")
+              line(begin-point, "key-c12.north-east", name: return-name + "-skele-2")
+              line(inner-corner-point, "key-d13.south-east", name: return-name + "-skele-3")
+              line(end-point, "key-d13.north-east", name: return-name + "-skele-4")
+              line(end-point, "key-e15.south-east", name: return-name + "-skele-5")
+              line(remaining-point, "key-b12.north-east", name: return-name + "-skele-6")
+            }
+          } else {
+            begin-point = (rel: (north-end-length / 2, -north-end-length / 2), to: "key-d13.north-east")
+            inner-corner-point = (rel: (north-end-length / 2, -north-end-length / 2), to: "key-d13.south-east")
+
+            if south-face-length <= west-end-length {
+              end-point = (rel: (-south-face-length / 2, south-face-length / 2), to: "key-b12.north-east")
+              remaining-point = (rel: (south-face-length / 2, -south-face-length / 2), to: "key-c12.north-east")
+
+              line(begin-point, inner-corner-point, remaining-point, end-point, name: return-name + "-skelecore")
+
+              line(begin-point, "key-d13.north-east", name: return-name + "-skele-1")
+              line(begin-point, "key-e15.south-east", name: return-name + "-skele-2")
+              line(end-point, "key-b12.north-east", name: return-name + "-skele-3")
+              line(end-point, "key-c12.south-east", name: return-name + "-skele-4")
+              line(remaining-point, "key-c12.north-east", name: return-name + "-skele-5")
+              line(inner-corner-point, "key-d13.south-east", name: return-name + "-skele-6")
+            } else {
+              end-point = (rel: (west-end-length / 2, west-end-length / 2), to: "key-c12.south-east")
+              remaining-point = (rel: (-west-end-length / 2, west-end-length / 2), to: "key-b12.north-east")
+
+              line(begin-point, inner-corner-point, remaining-point, end-point, name: return-name + "-skelecore")
+
+              line(begin-point, "key-d13.north-east", name: return-name + "-skele-1")
+              line(begin-point, "key-e15.south-east", name: return-name + "-skele-2")
+              line(remaining-point, "key-b12.north-east", name: return-name + "-skele-3")
+              line(end-point, "key-c12.south-east", name: return-name + "-skele-4")
+              line(end-point, "key-c12.north-east", name: return-name + "-skele-5")
+              line(inner-corner-point, "key-d13.south-east", name: return-name + "-skele-6")
+            }
+          }
+        }
+      )
+    )
 
   } else {
     panic("Sixty-percent does not recognize standard " + repr(standard))
