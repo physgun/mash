@@ -7,12 +7,12 @@
 
 #align(center + horizon, 
   box(
-    height: 5cm,
+    height: 6cm,
     width: 10cm,
     fill: blue.lighten(80%),
     mash({
-      import "../src/catalog/structure/components.typ": numpad, nav-keys, func-row, sixty-percent-row-a
-      mash-render(finished-dict: sixty-percent-row-a(standard: "ANSI", origin: (0, 0), unit-size: (1, 1)))
+      import "../src/catalog/structure/standard.typ": hundred-percent
+      mash-render(finished-dict: hundred-percent(standard: "ANSI", origin: (0, 0), unit-size: (1, 1)))
     })
   )
 )
