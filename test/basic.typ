@@ -7,7 +7,7 @@
 
 #align(center + horizon, 
   box(
-    height: 5cm,
+    height: 6cm,
     width: 10cm,
     fill: blue.lighten(80%),
     mash({
