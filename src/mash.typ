@@ -100,7 +100,6 @@
             scale-x = scale-y
           }
 
-          //set-viewport((0, 0), (parent-cetz-width, parent-cetz-height), bounds: inner-bounds)
           scope({
             scale(x: scale-x, y: scale-y)
             body
