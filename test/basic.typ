@@ -12,8 +12,8 @@
     fill: blue.lighten(80%),
     mash({
       import "../src/catalog/structure/standard.typ": hundred-percent, numpad
-      import "../src/catalog/structure/split.typ": ferris
-      mash-render(finished-dict: ferris(origin: (0, 0), unit-size: (1, 1)))
+      import "../src/catalog/structure/split.typ": ferris, glove80
+      mash-render(finished-dict: glove80(origin: (0, 0), unit-size: (1, 1)))
     })
   )
 )

@@ -84,8 +84,8 @@
           let parent-cetz-height = parent-container-size.height.to-absolute() / canvas.length.to-absolute()
 
           // If parent is the page, and the page dimension is set to 'auto', we'll get float.inf for that dimension.
-          if parent-cetz-width == float.inf { parent-cetz-width = 1.0 }
-          if parent-cetz-height == float.inf { parent-cetz-height = 1.0 }
+          if parent-cetz-width == float.inf { parent-cetz-width = 10.0 } // If the user wants a better size...
+          if parent-cetz-height == float.inf { parent-cetz-height = 10.0 } // ...they can pick one next time!
 
           let width-ratio = diagram-width / parent-cetz-width
           let height-ratio = diagram-height / parent-cetz-height
@@ -104,14 +104,10 @@
             scale(x: scale-x, y: scale-y)
             body
             if auto-scale-all.extra-cetz { extra-cetz }
-            rect((0, 0), (2.5, 2.5))
-          circle((4, 4))
           })
 
           set-style(stroke: (paint: black))
           if not auto-scale-all.extra-cetz { extra-cetz }
-          rect((0, 0), (2.5, 2.5))
-          circle((4, 4))
 
         })
       }
