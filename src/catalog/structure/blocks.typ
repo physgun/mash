@@ -10,7 +10,8 @@
   size: (1, 1),
   name: "unnamed-rect",
   tags: (),
-  default-style: structure-style
+  default-style: structure-style,
+  transform: none
 ) = {
   tags.push("rectangle")
 
@@ -22,33 +23,40 @@
     set-style(..default-style)
   }
   entry.cetz-structure = {
-    import cetz.draw: rect, line
+    import cetz.draw: rect, line, scope
 
-    // Primary unit boundaries.
-    rect(
-      origin,
-      size,
-      name: name
-    )
-
-    // Construct straight skeleton for offset helper anchors.
-    cetz.draw.get-ctx(ctx => {
-      let (ctx, (x0, y0, z0), (x1, y1, z1)) = cetz.coordinate.resolve(ctx, origin, size)
-      let (width, height) = ((calc.abs(x1 - x0)), calc.abs(y1 - y0))
-
-      if width >= height {
-        line((rel: (-height / 2, 0), to: name + ".east"), name + ".north-east", name: name + "-skele-1")
-        line((rel: (-height / 2, 0), to: name + ".east"), name + ".south-east", name: name + "-skele-2")
-        line((rel: (height / 2, 0), to: name + ".west"), name + ".south-west", name: name + "-skele-3")
-        line((rel: (height / 2, 0), to: name + ".west"), name + ".north-west", name: name + "-skele-4")
-        if width != height { line(name + "-skele-4.start", name + "-skele-1.start", name: name + "-skelecore") }
-      } else {
-        line((rel: (0, -width / 2), to: name + ".north"), name + ".north-east", name: name + "-skele-1")
-        line((rel: (0, -width / 2), to: name + ".north"), name + ".north-west", name: name + "-skele-2")
-        line((rel: (0, width / 2), to: name + ".south"), name + ".south-east", name: name + "-skele-3")
-        line((rel: (0, width / 2), to: name + ".south"), name + ".south-west", name: name + "-skele-4")
-        line(name + "-skele-2.start", name + "-skele-3.start", name: name + "-skelecore") 
+    // Limit transform to just this entry.
+    scope({
+      if transform != none {
+        transform
       }
+
+      // Primary unit boundaries.
+      rect(
+        origin,
+        size,
+        name: name
+      )
+
+      // Construct straight skeleton for offset helper anchors.
+      cetz.draw.get-ctx(ctx => {
+        let (ctx, (x0, y0, z0), (x1, y1, z1)) = cetz.coordinate.resolve(ctx, origin, size)
+        let (width, height) = ((calc.abs(x1 - x0)), calc.abs(y1 - y0))
+
+        if width >= height {
+          line((rel: (-height / 2, 0), to: name + ".east"), name + ".north-east", name: name + "-skele-1")
+          line((rel: (-height / 2, 0), to: name + ".east"), name + ".south-east", name: name + "-skele-2")
+          line((rel: (height / 2, 0), to: name + ".west"), name + ".south-west", name: name + "-skele-3")
+          line((rel: (height / 2, 0), to: name + ".west"), name + ".north-west", name: name + "-skele-4")
+          if width != height { line(name + "-skele-4.start", name + "-skele-1.start", name: name + "-skelecore") }
+        } else {
+          line((rel: (0, -width / 2), to: name + ".north"), name + ".north-east", name: name + "-skele-1")
+          line((rel: (0, -width / 2), to: name + ".north"), name + ".north-west", name: name + "-skele-2")
+          line((rel: (0, width / 2), to: name + ".south"), name + ".south-east", name: name + "-skele-3")
+          line((rel: (0, width / 2), to: name + ".south"), name + ".south-west", name: name + "-skele-4")
+          line(name + "-skele-2.start", name + "-skele-3.start", name: name + "-skelecore") 
+        }
+      })
     })
   }
 
@@ -121,3 +129,4 @@
 
   return collection.flatten()
 }
+
