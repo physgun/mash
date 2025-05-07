@@ -327,7 +327,7 @@ common-tags.push(name-prefix)
     let (origin-x, origin-y) = origin.rel
     new-origin = (rel: (origin-x + (space-between / 2), origin-y), to: origin.to)
   } else {
-    panic("ferris currently doesn't support " + origin-type)
+    panic("glove80 currently doesn't support " + origin-type)
   }
 
   both-sides.push(
