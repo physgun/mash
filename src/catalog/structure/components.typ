@@ -1,5 +1,5 @@
 #import "../../deps.typ": cetz
-#import "../structure/blocks.typ": unit-rect, inverted-t, one-by-three, two-by-three, three-by-three, one-by-four
+#import "../structure/blocks.typ": unit-rect, place-on-grid,
 #import "../display/flat.typ": debug-gray
 
 #let structure-style = debug-gray
@@ -15,7 +15,8 @@
   common-tags.push("arrow")
   common-tags.push("cursor")
   common-tags.push("button")
-  inverted-t(
+  place-on-grid(
+    positions: ((1, 1), (1, 2), (1, 3), (2, 2)),
     origin: origin, 
     unit-size: unit-size,
     common-tags: common-tags,
@@ -69,7 +70,8 @@
       )
     ),
     (
-      three-by-three(
+      place-on-grid(
+        positions: ((1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (2, 3), (3, 1), (3, 2), (3, 3)),
         origin: "numpad-0.north-west", 
         unit-size: unit-size,
         common-tags: number-tags,
@@ -96,7 +98,8 @@
       )
     ),
     (
-      one-by-three(
+      place-on-grid(
+        positions: ((1, 1), (1, 2), (1, 3)),
         origin: "numpad-numlock.south-east", 
         unit-size: unit-size,
         common-tags: common-tags,
@@ -118,7 +121,8 @@
   common-tags.push("navigation")
   common-tags.push("button")
 
-  two-by-three(
+  place-on-grid(
+    positions: ((1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (2, 3)),
     origin: origin, 
     unit-size: unit-size,
     common-tags: common-tags,
@@ -198,7 +202,8 @@
       )
     ),
     (
-      one-by-four(
+      place-on-grid(
+        positions: ((1, 1), (1, 2), (1, 3), (1, 4)),
         origin: (rel: (unit-size-x, 0), to: names.at(0) + ".south-east"), 
         unit-size: unit-size,
         common-tags: func-tags,
@@ -207,7 +212,8 @@
       )
     ),
     (
-      one-by-four(
+      place-on-grid(
+        positions: ((1, 1), (1, 2), (1, 3), (1, 4)),
         origin: (rel: (unit-size-x / 2, 0), to: names.at(4) + ".south-east"), 
         unit-size: unit-size,
         common-tags: func-tags,
@@ -216,7 +222,8 @@
       )
     ),
     (
-      one-by-four(
+      place-on-grid(
+        positions: ((1, 1), (1, 2), (1, 3), (1, 4)),
         origin: (rel: (unit-size-x / 2, 0), to: names.at(8) + ".south-east"), 
         unit-size: unit-size,
         common-tags: func-tags,
@@ -248,7 +255,8 @@
   char-tags.push("character")
 
   let row-a = (
-    one-by-three(
+    place-on-grid(
+      positions: ((1, 1), (1, 2), (1, 3)),
       origin: origin, 
       unit-size: (unit-size-x * 1.25, unit-size-y), 
       common-tags: mod-tags,
@@ -307,7 +315,8 @@
   }
   
   row-a.push(
-    one-by-four(
+    place-on-grid(
+      positions: ((1, 1), (1, 2), (1, 3), (1, 4)),
       origin: names.at(naming-index - 1) + ".south-east", 
       unit-size: (unit-size-x * 1.25, unit-size-y), 
       common-tags: mod-tags,

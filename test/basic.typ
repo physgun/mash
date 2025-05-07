@@ -5,14 +5,15 @@
 
 #lorem(100)
 
-#align(center + horizon, 
+#align(center + horizon,
   box(
-    height: 6cm,
+    height: 3cm,
     width: 10cm,
     fill: blue.lighten(80%),
     mash({
-      import "../src/catalog/structure/standard.typ": hundred-percent
-      mash-render(finished-dict: hundred-percent(standard: "ANSI", origin: (0, 0), unit-size: (1, 1)))
+      import "../src/catalog/structure/standard.typ": hundred-percent, numpad
+      import "../src/catalog/structure/split.typ": ferris, glove80
+      mash-render(finished-dict: glove80(origin: (0, 0), unit-size: (1, 1)))
     })
   )
 )
