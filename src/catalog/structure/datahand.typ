@@ -29,7 +29,7 @@
     (3 + offset-y, 2 + offset-x), 
   )
 
-  let grid-names(finger: "fingy") = (
+  let grid-names(finger: "UNNAMED") = (
         "south", "west", "center", "east", "north"
       ).map(it => {name-prefix + "-" + finger + "-" + it})
 
@@ -176,7 +176,7 @@
     let (origin-x, origin-y) = origin.rel
     new-origin = (rel: (origin-x + (space-between / 2), origin-y), to: origin.to)
   } else {
-    panic("glove80 currently doesn't support " + origin-type)
+    panic("svalboard currently doesn't support " + origin-type)
   }
 
   both-sides.push(
