@@ -97,12 +97,10 @@
 
   lh-side = lh-side.flatten().map(entry => {
     entry.insert(
-      "cetz-structure",
+      "transforms",
       {
-        cetz.draw.scope({
-          cetz.draw.scale(x: -1)
-          entry.cetz-structure
-        })
+        cetz.draw.scale(x: -1)
+        entry.transforms
       }
     )
     return entry
@@ -290,12 +288,10 @@ common-tags.push(name-prefix)
 
   lh-side = lh-side.flatten().map(entry => {
     entry.insert(
-      "cetz-structure",
+      "transforms",
       {
-        cetz.draw.scope({
-          cetz.draw.scale(x: -1)
-          entry.cetz-structure
-        })
+        cetz.draw.scale(x: -1)
+        entry.transforms
       }
     )
     return entry

@@ -6,6 +6,8 @@
   named: "unnamed",
   /// This is how entries will be grouped and filtered for modification.
   tags: ("empty",),
+  /// Transforms to be applied globally to the entry.
+  transforms: none,
   /// Style parameters for the underlying diagram structure.
   style-structure: {},
   /// Array of cetz elements describing the diagram structure.
@@ -19,16 +21,20 @@
 #let mash-render(
   finished-dict: (:),
   ) = {
+  let entry-cetz = ()
   let final-cetz = ()
   let scoped-section = ()
 
   for entry in finished-dict {
-    for (key, value) in entry {
+    if entry.transforms != none {
+      entry-cetz.push({entry.transforms})
+    }
 
+    for (key, value) in entry {
       // "style-" type keys start a new section, unless the section is empty.
       if key.contains(regex("^style-")) {
         if scoped-section.len() != 0 {
-          final-cetz.push({scope(scoped-section)})
+          entry-cetz.push({scope(scoped-section)})
           scoped-section = ().push(value)
         } else {
           scoped-section.push(value)
@@ -42,12 +48,15 @@
 
     // Entry complete. push remaining if there is any.
     if scoped-section.len() != 0 {
-      final-cetz.push(scoped-section)
+      entry-cetz.push(scoped-section)
       scoped-section = ()
     }
+
+    // Enclose everything to prevent transforms from affecting the next entry.
+    final-cetz.push({cetz.draw.scope(entry-cetz.flatten())})
+    entry-cetz = ()
   }
 
-  // here u go
   final-cetz.flatten()
 }
 
