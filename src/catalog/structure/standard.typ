@@ -79,7 +79,7 @@
         origin: "key-c12.south-east",
         size: (rel: (unit-size-x * 2.25, unit-size-y)), 
         name: return-name,
-        tags: ("button", "row-c", "edit", "sixty-percent"), // technically a character key but w/e
+        tags: ("button", "row-c", "edit", "sixty-percent"), 
         default-style: structure-style
       )
     )
@@ -87,6 +87,7 @@
 
     // The unique ISO return key.
     return-entry.named = return-name
+    return-entry.type = "hexagon"
     return-entry.tags = ("button", "edit", "sixty-percent", "polygon")
     return-entry.style-structure = {
       import cetz.draw: set-style
@@ -189,10 +190,11 @@
 
   } else if standard == "ANSI-ALT" or standard == "KS" {
 
-    // Mostly found in Asia, known in the West as "big-ass enter".
+    // Mostly found in Asia, known to some in the West as "big-ass enter".
     // Same as ISO, just flipped.
     
     return-entry.named = return-name
+    return-entry.type = "hexagon"
     return-entry.tags = ("button", "edit", "sixty-percent", "polygon")
     return-entry.style-structure = {
       import cetz.draw: set-style
