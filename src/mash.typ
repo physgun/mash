@@ -4,6 +4,8 @@
 #let mash-entry = (
   /// Does not need to be unique.
   named: "unnamed",
+  /// "We have Custom Types at home."
+  type: "feature",
   /// This is how entries will be grouped and filtered for modification.
   tags: ("empty",),
   /// Transforms to be applied globally to the entry.
@@ -61,6 +63,8 @@
 }
 
 /// The quick and easy way!
+/// 
+/// when I finish it
 #let mash(
   body,
   auto-scale-all: (
